@@ -12,9 +12,4 @@ public class MainSteps {
     public void stepSelectMenu(String menuName){
         mainPage.selectMenuItem(menuName);
     }
-
-    @Step("Выполнен переход в корзину")
-    public void stepGoToCard(){
-        mainPage.goToCard();
-    }
 }

@@ -12,10 +12,9 @@ import java.util.List;
 
 
 public class MainPage extends BasePage {
-    @FindBy(xpath="//ul[@id='desktopMenuMain']//a[text()]")
+
+    @FindBy(xpath="//div[@class='service__title-text']/..")
     List<WebElement> menuItems;
-    @FindBy(xpath = "//a[@title='Перейти в корзину']")
-    WebElement cart;
 
     public MainPage() {
         PageFactory.initElements(BaseSteps.getDriver(), this);
@@ -23,26 +22,13 @@ public class MainPage extends BasePage {
 
     public void selectMenuItem(String menuItem){
         for (WebElement item:menuItems){
-            if (item.getText().equalsIgnoreCase(menuItem)){
-                new WebDriverWait(driver, 10)
-                        .until(ExpectedConditions.elementToBeClickable(item)).click();
+            if (item.findElement(By.xpath("./div")).getText().equalsIgnoreCase(menuItem)){
+                new WebDriverWait(driver, 10).
+                        until(ExpectedConditions.elementToBeClickable(item.findElement(By.xpath("./a")))).
+                        click();
                 return;
             }
         }
         Assert.fail("Не найдён пункт меню " + menuItem);
     }
-    public void goToCard(){
-        cart.click();
-    }
-
-    /*public void selectMenuItem(String itemName){
-        driver.findElement(By.xpath("//ul[@id='desktopMenuMain']/li/a[contains(text(), '"+itemName+"')]")).click();
-    }
-
-    public void selectSubmenuItem(String itemName){
-        WebElement element = driver.findElement(By.xpath("//div[@class='main-menu__wrap']//a[contains(text(), '"+itemName+"')]"));
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.visibilityOf(element));
-        element.click();
-    }*/
 }

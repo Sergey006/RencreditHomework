@@ -49,13 +49,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -82,19 +75,19 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
-                    <!--<includes>
+                    <includes>
                         <include>**/CucumberRunner.java</include>
-                    </includes>-->
+                    </includes>
                     <useSystemClassLoader>false</useSystemClassLoader>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <properties>
+                    <!--<properties>
                         <property>
                             <name>listener</name>
                             <value>io.qameta.allure.junit4.AllureJunit4</value>
                         </property>
-                    </properties>
+                    </properties>-->
                     <systemProperties>
                         <property>
                             <name>allure.results.directory</name>

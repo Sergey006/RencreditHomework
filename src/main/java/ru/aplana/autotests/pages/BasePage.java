@@ -13,6 +13,7 @@ public class BasePage {
     }
 
     public void fillField(WebElement field, String value){
+        field.click();
         field.clear();
         field.sendKeys(value);
         field.sendKeys(Keys.ENTER);
