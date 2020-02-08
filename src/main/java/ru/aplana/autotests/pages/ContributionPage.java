@@ -98,10 +98,12 @@ public class ContributionPage extends BasePage {
         capitalization.click();
         waitForChange(currentResult);
     }
-    public void selectPartialOut(){
-        String currentResult = resultMoneyView.getText();
-        partialOut.click();
-        waitForChange(currentResult);
+    public void selectPartialOut(String isSelected){
+        if (isSelected.equalsIgnoreCase("true")) {
+            String currentResult = resultMoneyView.getText();
+            partialOut.click();
+            waitForChange(currentResult);
+        }
     }
     public void selectOpenInBank(){
         openInBank.click();

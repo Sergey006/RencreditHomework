@@ -24,9 +24,9 @@ public class ContributionSteps {
         contributionPage.selectCapitalization();
     }
 
-    @Step("Выбран пункт 'Частичное снятие'")
-    public void stepSelectPartialOut(){
-        contributionPage.selectPartialOut();
+    @Step("Выбран пункт 'Частичное снятие': {0}")
+    public void stepSelectPartialOut(String isSelected){
+        contributionPage.selectPartialOut(isSelected);
     }
     @Step("Выбрана опция 'Открытие вклада в отделении банка'")
     public void stepSelectOpenInBank(){

@@ -33,9 +33,9 @@ public class ScenarioSteps {
     public void selectCapitalization(){
         contributionSteps.stepSelectCapitalization();
     }
-    @When("^выбран пункт 'Частичное снятие'$")
-    public void selectPartialOut(){
-        contributionSteps.stepSelectPartialOut();
+    @When("^выбран пункт 'Частичное снятие': \"(.+)\"$")
+    public void selectPartialOut(String isSelected){
+        contributionSteps.stepSelectPartialOut(isSelected);
     }
 
     @Then("^значения полей равны:$")
