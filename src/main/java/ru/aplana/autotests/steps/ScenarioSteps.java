@@ -2,51 +2,52 @@ package ru.aplana.autotests.steps;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.api.java.ru.Когда;
 import io.cucumber.datatable.DataTable;
-import io.qameta.allure.Step;
+import ru.aplana.autotests.pages.SavingsPage;
 
 public class ScenarioSteps {
     MainSteps mainSteps = new MainSteps();
-    ContributionSteps contributionSteps = new ContributionSteps();
+    SavingsSteps savingsSteps = new SavingsSteps();
+    EveryDaySteps everyDaySteps = new EveryDaySteps();
 
     @When("^выбран пункт меню \"(.+)\"$")
-    public void selectMenu(String menuName){
-        mainSteps.stepSelectMenu(menuName);
+    public void selectMenu(String menuItem){
+        mainSteps.stepSelectElement(menuItem);
+    }
+    @When("^выбран подпункт меню \"(.+)\"$")
+    public void selectSubMenu(String menuItem){
+        mainSteps.stepSelectSubmenuElement(menuItem);
+    }
+    @When("^подтвержден город$")
+    public void selectAgreeCity(){
+        mainSteps.stepAgreeCity();
     }
 
-
-    @When("^выбрана валюта - \"(.+)\"$")
-    public void selectCurrency(String currency){
-        contributionSteps.stepSelectCurrency(currency);
+    @When("^выбран счёт \"(.+)\"$")
+    public void selectSaving(String savingName){
+        savingsSteps.stepSelectSaving(savingName);
+    }
+    @Then("^заголовок страницы содержит \"(.+)\"$")
+    public void checkTitle(String title){
+        everyDaySteps.stepCheckTitle(title);
     }
     @When("^заполняются поля:$")
-    public void fillField(DataTable fields){
+    public void fillForm(DataTable fields){
         fields.asMap(String.class, String.class)
-                .forEach((field, value) -> contributionSteps.stepFillField((String)field, (String)value));
+                .forEach((field, value) -> everyDaySteps.stepFillField((String)field, (String)value));
+
     }
-    @When("^выбран период - \"(.+)\" месяцев$")
-    public void selectPeriod(String period){
-        contributionSteps.stepSelectPeriod(period);
+    @When("^выбран город \"(.+)\"$")
+    public void selectCity(String cityName){
+        everyDaySteps.stepSelectCity(cityName);
     }
-    @When("^выбран пункт 'Капитализация'$")
-    public void selectCapitalization(){
-        contributionSteps.stepSelectCapitalization();
+    @When("^выбрано отделение \"(.+)\"$")
+    public void selectBranch(String branchName){
+        everyDaySteps.stepSelectBranch(branchName);
     }
-    @When("^выбран пункт 'Частичное снятие': \"(.+)\"$")
-    public void selectPartialOut(String isSelected){
-        contributionSteps.stepSelectPartialOut(isSelected);
+    @When("^кликнут чекбокс согласия$")
+    public void selectAgree(){
+        everyDaySteps.stepSelectCheckbox();
     }
-
-    @Then("^значения полей равны:$")
-    public void checkFillForm(DataTable fields){
-        fields.asMap(String.class, String.class)
-                .forEach((field, value) -> contributionSteps.stepCheckField((String)field, (String)value));
-    }
-
-
-
-
-
 
 }

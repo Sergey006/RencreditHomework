@@ -1,34 +1,48 @@
 package ru.aplana.autotests.pages;
+
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.aplana.autotests.steps.BaseSteps;
 
 import java.util.List;
 
-
-public class MainPage extends BasePage {
-
-    @FindBy(xpath="//div[@class='service__title-text']/..")
-    List<WebElement> menuItems;
+public class MainPage {
 
     public MainPage() {
         PageFactory.initElements(BaseSteps.getDriver(), this);
     }
 
+
+    @FindBy(xpath = "//ul[@class='main-menu']//a")
+    List<WebElement> menuElements;
+
+    @FindBy(xpath = "//a[@class='menu-section-link']")
+    List<WebElement> submenuElements;
+    @FindBy(xpath = "//div[@class='informer__btns']/div[contains(text(), 'Да')]")
+    WebElement agreementYes;
+
     public void selectMenuItem(String menuItem){
-        for (WebElement item:menuItems){
-            if (item.findElement(By.xpath("./div")).getText().equalsIgnoreCase(menuItem)){
-                new WebDriverWait(driver, 10).
-                        until(ExpectedConditions.elementToBeClickable(item.findElement(By.xpath("./a")))).
-                        click();
+        for (WebElement item : menuElements){
+            if (item.getText().contains(menuItem)){
+                item.click();
                 return;
             }
         }
-        Assert.fail("Не найдён пункт меню " + menuItem);
+        Assert.fail("Не найден пункт "+ menuItem);
+    }
+
+    public void selectSubmenuItem(String submenuItem){
+        for (WebElement item : submenuElements){
+            if (item.getText().contains(submenuItem)){
+                item.click();
+                return;
+            }
+        }
+        Assert.fail("Не найден пункт "+ submenuItem);
+    }
+    public void agreeCity(){
+        agreementYes.click();
     }
 }
