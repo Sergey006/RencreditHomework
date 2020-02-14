@@ -11,8 +11,10 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import ru.aplana.autotests.util.Product;
 import ru.aplana.autotests.util.TestProperties;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -22,11 +24,13 @@ public class BaseSteps {
     private static WebDriver driver;
     private static String baseUrl;
     private static Properties properties = TestProperties.getInstance().getProperties();
-
+    public static ArrayList<Product> cartProducts = new ArrayList<>();
+    public static void addToCart(Product product){
+        cartProducts.add(product);
+    }
     public static WebDriver getDriver(){
         return driver;
     }
-
     @Before
     public static void startScenario() throws Exception {
         switch (properties.getProperty("browser")) {
@@ -45,7 +49,7 @@ public class BaseSteps {
 
         baseUrl = properties.getProperty("app.url");
         System.out.println(baseUrl);
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get(baseUrl);
     }

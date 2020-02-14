@@ -13,8 +13,9 @@ public class BasePage {
     }
 
     public void fillField(WebElement field, String value){
-        field.click();
+        /*field.click();*/
         field.clear();
+        field.sendKeys(Keys.CONTROL + "a" + Keys.DELETE);
         field.sendKeys(value);
         field.sendKeys(Keys.ENTER);
     }

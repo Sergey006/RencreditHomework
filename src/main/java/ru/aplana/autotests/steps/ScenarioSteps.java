@@ -3,51 +3,55 @@ package ru.aplana.autotests.steps;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
-import ru.aplana.autotests.pages.SavingsPage;
 
 public class ScenarioSteps {
     MainSteps mainSteps = new MainSteps();
-    SavingsSteps savingsSteps = new SavingsSteps();
-    EveryDaySteps everyDaySteps = new EveryDaySteps();
+    SearchSteps searchSteps = new SearchSteps();
+    CartSteps cartSteps = new CartSteps();
 
-    @When("^выбран пункт меню \"(.+)\"$")
-    public void selectMenu(String menuItem){
-        mainSteps.stepSelectElement(menuItem);
-    }
-    @When("^выбран подпункт меню \"(.+)\"$")
-    public void selectSubMenu(String menuItem){
-        mainSteps.stepSelectSubmenuElement(menuItem);
-    }
-    @When("^подтвержден город$")
-    public void selectAgreeCity(){
-        mainSteps.stepAgreeCity();
-    }
-
-    @When("^выбран счёт \"(.+)\"$")
-    public void selectSaving(String savingName){
-        savingsSteps.stepSelectSaving(savingName);
-    }
-    @Then("^заголовок страницы содержит \"(.+)\"$")
-    public void checkTitle(String title){
-        everyDaySteps.stepCheckTitle(title);
-    }
+/*
     @When("^заполняются поля:$")
     public void fillForm(DataTable fields){
         fields.asMap(String.class, String.class)
-                .forEach((field, value) -> everyDaySteps.stepFillField((String)field, (String)value));
+                .forEach((field, value) -> everyDaySteps.stepFillField((String)field, (String)value)); }
+*/
 
+
+    @When("^выполнен поиск товара '\"(.+)\"'$")
+    public void searchProduct(String productName){
+        mainSteps.stepSearchProduct(productName);
     }
-    @When("^выбран город \"(.+)\"$")
-    public void selectCity(String cityName){
-        everyDaySteps.stepSelectCity(cityName);
+    @When("^выбрана цена до '\"(.+)\"'$")
+    public void limitPriceTo(String priceTo){
+        searchSteps.stepLimitPriceTo(priceTo);
     }
-    @When("^выбрано отделение \"(.+)\"$")
-    public void selectBranch(String branchName){
-        everyDaySteps.stepSelectBranch(branchName);
+    @When("^выполнен клик по чекбоксу 'Высокий рейтинг'$")
+    public void selectHighRating(){
+        searchSteps.stepSelectHighRating();
     }
-    @When("^кликнут чекбокс согласия$")
-    public void selectAgree(){
-        everyDaySteps.stepSelectCheckbox();
+    @When("^выбрано значение оперативной памяти в \"(.+)\" ГБ$")
+    public void selectRAM(String value){
+        searchSteps.stepSelectRAM(value);
+    }
+    @When("^закрыто сообщение про cookies$")
+    public void closeCookies(){
+        mainSteps.stepCloseCookies();
+    }
+    @When("^в корзину добавлены первые восемь нечётных товаров$")
+    public void addToCartFirstEightOddProducts(){
+        searchSteps.stepAddToCartFirstEightOddProducts();
+    }
+    @When("^выполнен переход в корзину$")
+    public void goToCart(){
+        mainSteps.stepGoToCart();
+    }
+    @When("^куплены товары$")
+    public void buyProducts(){
+        cartSteps.stepBuyProducts();
+    }
+    @When("^выполнена проверка наличия выбранных товаров в корзине$")
+    public void checkCart(){
+        cartSteps.stepCheckCart();
     }
 
 }
