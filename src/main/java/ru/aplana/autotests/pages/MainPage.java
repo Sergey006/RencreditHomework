@@ -28,12 +28,11 @@ public class MainPage extends BasePage{
     WebElement closeCookies;
     @FindBy(xpath = "//a[@data-widget='cart']")
     WebElement cart;
-    @FindBy(xpath = "//span[contains(@class, 'exponea-close-cross')]")
-    List<WebElement> popupAdvertisement;
 
-
+    By popupAdvertisementXpath = By.xpath("//span[contains(@class, 'exponea-close-cross')]");
 
     public void closePopupAdvertisement(){
+        List<WebElement> popupAdvertisement = driver.findElements(popupAdvertisementXpath);
         if (popupAdvertisement.size() > 0 && popupAdvertisement.get(0).isDisplayed()){
             popupAdvertisement.get(0).click();
         }

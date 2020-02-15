@@ -28,26 +28,41 @@ public class SearchPage extends BasePage {
     WebElement highRating;
     @FindBy(xpath = "//div[contains(text(),'Оперативная')]/..//span[contains(text(), 'ГБ')]")
     List<WebElement> listRAM;
-    @FindBy(xpath = "//div[@data-widget='searchResultsSort']//span[text()='Цена']")
-    WebElement waitPriceElement;
-
     @FindBy(xpath = "//div[contains(@data-widget,'searchResultsV2')]/div/div/div")
     List<WebElement> productsList;
-    @FindBy(xpath="//span[contains(text(), 'Ваша корзина')]/../span[contains(text(),'товар')]")
-    WebElement productsInCartQuantity;
+    @FindBy(xpath = "//div[contains(text(),'Бренды')]/../div/div/input")
+    WebElement brandField;
 
-    public void checkProductsQuantity(String quantity){
-        String currentQuantity = productsInCartQuantity.getText().split("товар")[0].trim();
-        Assert.assertEquals("Проверка, что фактическое количество товаров в корзине '"+ currentQuantity
-                + "' равно ожидаемому '"+ quantity +"'", currentQuantity, quantity);
+
+
+    public void clickOptionCheckbox(String checkboxName){
+        if (checkboxName.equalsIgnoreCase("false")) return;
+        driver.findElement(By.xpath("//div[@class='cs4']/..//label//span[contains(text(), '"+ checkboxName +"')]")).click();
     }
+    public void selectBrand(String brandName){
+        if (brandName.equalsIgnoreCase("false")) return;
+        List<WebElement> showAll = null;
+        if ((showAll = driver.findElements(By.xpath("//span[@data-test-id='filter-block-brand-show-all']"))).size() > 0){
+            showAll.get(0).click();
+        }
+        fillField(brandField, brandName);
+        WebElement brand = driver.findElement(By.xpath("//div[contains(text(),'Бренды')]/..//label//span[contains(text(), '"+ brandName +"')]"));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(brand)).click();
+    }
+    public void addProductsToCart(String quantity, String isEven){
+        int quantityInt = 0;
+        try{
+            quantityInt = Integer.parseInt(quantity);
+        }catch(NumberFormatException e){
+            if (quantity.equalsIgnoreCase("все")){
+                quantityInt = productsList.size();
+            }
+        }
 
-    public void buyFirstEightOddProducts(){
-        int i = 0;
-        for (WebElement product:productsList){
-            //if (++i > 14) break;
+        for (int count = isEven.equalsIgnoreCase("true")?1:0; count < productsList.size() && count < quantityInt*2; count += 2){
+            WebElement product = driver.findElements(By.xpath("//div[contains(@data-widget,'searchResultsV2')]/div/div/div")).get(count);
             List<WebElement> buyButton = product.findElements(By.xpath(".//button[@qa-id='tile-buy-button']"));
-            if (++i % 2 != 0 && buyButton.size() > 0){
+            if (buyButton.size() > 0){
                 String productName = product.
                         findElement(By.xpath(".//a[@data-test-id='tile-name']")).
                         getText();
@@ -59,9 +74,6 @@ public class SearchPage extends BasePage {
                 new Actions(driver).moveToElement(buyButton.get(0)).click().perform();
             }
         }
-    }
-    public void setPriceFrom(String value){
-        fillField(fromPriceInput, value);
     }
     public void setPriceTo(String value){
         toPriceInput.click();

@@ -14,7 +14,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.aplana.autotests.util.Product;
 import ru.aplana.autotests.util.TestProperties;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +26,7 @@ public class BaseSteps {
     private static WebDriver driver;
     private static String baseUrl;
     private static Properties properties = TestProperties.getInstance().getProperties();
-    public static ArrayList<Product> cartProducts = new ArrayList<>();
+    public static ArrayList<Product> cartProducts;
     public static void addToCart(Product product){
         cartProducts.add(product);
     }
@@ -49,9 +51,10 @@ public class BaseSteps {
 
         baseUrl = properties.getProperty("app.url");
         System.out.println(baseUrl);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get(baseUrl);
+        cartProducts = new ArrayList<>();
     }
 
     @After
@@ -63,4 +66,17 @@ public class BaseSteps {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
+    @Attachment
+    public static ArrayList<Product> printProducts(){
+        return cartProducts;
+    }
+    @Attachment
+    public static Product printMaxPriceProduct(){
+        return cartProducts.stream().max(new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return Integer.parseInt(o1.getPrice()) - Integer.parseInt(o2.getPrice());
+            }
+        }).get();
+    }
 }
