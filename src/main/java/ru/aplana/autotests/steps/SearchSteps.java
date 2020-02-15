@@ -22,5 +22,9 @@ public class SearchSteps {
     public void stepAddToCartFirstEightOddProducts(){
         searchPage.buyFirstEightOddProducts();
     }
+    @Step("Проверка наличия в корзине {0} товаров")
+    public void stepCheckProductsQuantity(String quantity){
+        searchPage.checkProductsQuantity(quantity);
+    }
 
 }

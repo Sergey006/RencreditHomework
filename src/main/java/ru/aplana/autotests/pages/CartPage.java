@@ -32,6 +32,7 @@ public class CartPage extends BasePage{
             if (!currentProductsInCart.contains(p)){
                 Assert.fail("В корзине не хватает продукта: " + p);
             }
+            System.out.println(p);
         }
     }
 

@@ -37,6 +37,10 @@ public class ScenarioSteps {
     public void closeCookies(){
         mainSteps.stepCloseCookies();
     }
+    @When("^закрыта всплывающая реклама$")
+    public void closeAdvertisement(){
+        mainSteps.stepCloseAdvertisement();
+    }
     @When("^в корзину добавлены первые восемь нечётных товаров$")
     public void addToCartFirstEightOddProducts(){
         searchSteps.stepAddToCartFirstEightOddProducts();
@@ -53,5 +57,8 @@ public class ScenarioSteps {
     public void checkCart(){
         cartSteps.stepCheckCart();
     }
-
+    @When("^выполнена проверка наличия в корзине \"(.+)\" товаров$")
+    public void checkProductsQuantity(String quantity){
+        searchSteps.stepCheckProductsQuantity(quantity);
+    }
 }

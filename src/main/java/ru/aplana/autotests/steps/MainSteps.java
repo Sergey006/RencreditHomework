@@ -15,6 +15,10 @@ public class MainSteps {
     public void stepCloseCookies(){
         mainPage.closeCookies();
     }
+    @Step("Закрыта всплывающая реклама(при наличии)")
+    public void stepCloseAdvertisement(){
+        mainPage.closePopupAdvertisement();
+    }
     @Step("Выполнен переход в корзину")
     public void stepGoToCart(){
         mainPage.goToCart();

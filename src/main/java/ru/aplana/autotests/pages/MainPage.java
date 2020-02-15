@@ -1,6 +1,7 @@
 package ru.aplana.autotests.pages;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -27,15 +28,22 @@ public class MainPage extends BasePage{
     WebElement closeCookies;
     @FindBy(xpath = "//a[@data-widget='cart']")
     WebElement cart;
+    @FindBy(xpath = "//span[contains(@class, 'exponea-close-cross')]")
+    List<WebElement> popupAdvertisement;
 
 
 
+    public void closePopupAdvertisement(){
+        if (popupAdvertisement.size() > 0 && popupAdvertisement.get(0).isDisplayed()){
+            popupAdvertisement.get(0).click();
+        }
+    }
     public void searchProduct(String productName){
         fillField(searchInput, productName);
         searchSubmitButton.click();
     }
     public void closeCookies(){
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(closeCookies));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@aria-label='Закрыть сообщение']")));
         Actions action = new Actions(driver);
         action.moveToElement(closeCookies).click().perform();
     }
